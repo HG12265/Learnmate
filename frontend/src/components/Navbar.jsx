@@ -90,7 +90,7 @@ export default function Navbar({
 
         {/* Center Navigation Bar */}
         {user ? (
-          <nav style={{
+          <nav className="navbar-center-nav" style={{
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
@@ -215,7 +215,7 @@ export default function Navbar({
                 }}>
                   {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                 </div>
-                <span style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                <span className="navbar-user-name" style={{ fontSize: '0.86rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                   {user.name}
                 </span>
               </div>
@@ -227,7 +227,7 @@ export default function Navbar({
                 style={{ padding: '7px 12px', fontSize: '0.82rem', gap: '6px', background: 'rgba(255, 255, 255, 0.85)' }}
               >
                 <LogOut size={15} color="var(--accent-rose)" />
-                <span>Sign Out</span>
+                <span className="navbar-signout-text">Sign Out</span>
               </button>
             </div>
           ) : (

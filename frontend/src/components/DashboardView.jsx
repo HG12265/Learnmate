@@ -75,21 +75,12 @@ export default function DashboardView({
   const totalCertificates = certificates.length;
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '32px 20px 80px' }}>
+    <div className="dashboard-container">
       
       {/* ============================================================== */}
       {/* Executive Learner Command Center Hero                          */}
       {/* ============================================================== */}
-      <div className="clean-panel" style={{
-        padding: '36px 36px',
-        marginBottom: '32px',
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'rgba(255, 255, 255, 0.88)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.95)',
-        boxShadow: '0 20px 50px -10px rgba(15, 23, 42, 0.08), inset 0 1px 2px rgba(255, 255, 255, 1)'
-      }}>
+      <div className="dashboard-hero-panel">
         {/* Ambient Top Light Beam */}
         <div style={{
           position: 'absolute',
@@ -102,46 +93,31 @@ export default function DashboardView({
           pointerEvents: 'none'
         }} />
 
-        <div style={{ 
-          position: 'relative',
-          zIndex: 2,
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          flexWrap: 'wrap', 
-          gap: '24px' 
-        }}>
+        <div className="dashboard-hero-inner">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '5px 14px',
+                padding: '4px 12px',
                 borderRadius: '9999px',
                 background: 'rgba(37, 99, 235, 0.08)',
                 color: '#1d4ed8',
                 border: '1px solid rgba(191, 219, 254, 0.8)',
-                fontSize: '0.78rem',
+                fontSize: '0.74rem',
                 fontWeight: 800,
                 letterSpacing: '0.04em',
                 textTransform: 'uppercase'
               }}>
                 <Sparkles size={12} color="#2563eb" /> Learner Command Center
               </span>
-              <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
+              <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
                 Account: <strong style={{ color: '#0f172a' }}>{user?.email || 'Active Learner'}</strong>
               </span>
             </div>
 
-            <h1 className="font-heading" style={{ 
-              fontSize: 'clamp(1.9rem, 3.8vw, 2.4rem)', 
-              fontWeight: 900, 
-              color: '#0f172a', 
-              margin: '0 0 10px', 
-              lineHeight: 1.15,
-              letterSpacing: '-0.025em' 
-            }}>
+            <h1 className="font-heading dashboard-hero-title">
               Welcome back, <span style={{
                 background: 'linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #0284c7 100%)',
                 WebkitBackgroundClip: 'text',
@@ -149,13 +125,13 @@ export default function DashboardView({
               }}>{user?.name || 'Explorer'}</span>! 👋
             </h1>
 
-            <p style={{ fontSize: '0.96rem', color: '#475569', margin: 0, maxWidth: '720px', lineHeight: 1.6 }}>
+            <p className="dashboard-hero-subtitle">
               Track your personalized pathways, pick up exactly where you left off, review completed modules in deep AI study labs, and validate your real credentials.
             </p>
 
             {/* Profile info badges */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '18px' }}>
-              <span style={{ fontSize: '0.76rem', color: '#64748b', fontWeight: 700 }}>Profile Baseline:</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '14px' }}>
+              <span style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 700 }}>Profile Baseline:</span>
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -163,9 +139,9 @@ export default function DashboardView({
                 background: 'rgba(241, 245, 249, 0.85)',
                 border: '1px solid rgba(226, 232, 240, 0.9)',
                 color: '#1e293b',
-                padding: '4px 12px',
+                padding: '3px 10px',
                 borderRadius: '9999px',
-                fontSize: '0.78rem',
+                fontSize: '0.74rem',
                 fontWeight: 600
               }}>
                 <GraduationCap size={13} color="#2563eb" /> {user?.education || 'Graduate'}
@@ -178,9 +154,9 @@ export default function DashboardView({
                   background: 'rgba(239, 246, 255, 0.85)',
                   border: '1px solid rgba(191, 219, 254, 0.9)',
                   color: '#1d4ed8',
-                  padding: '4px 12px',
+                  padding: '3px 10px',
                   borderRadius: '9999px',
-                  fontSize: '0.78rem',
+                  fontSize: '0.74rem',
                   fontWeight: 700
                 }}>
                   <Target size={13} /> Target: {user.target_role}
@@ -192,13 +168,7 @@ export default function DashboardView({
           <div>
             <button
               onClick={onCreateNewPath}
-              className="btn btn-primary"
-              style={{ 
-                fontSize: '0.98rem', 
-                padding: '13px 26px', 
-                gap: '9px',
-                borderRadius: '13px'
-              }}
+              className="btn btn-primary dashboard-create-btn"
             >
               <PlusCircle size={18} />
               <span>Create New Pathway</span>
@@ -208,127 +178,98 @@ export default function DashboardView({
       </div>
 
       {/* ============================================================== */}
-      {/* 4 Frosted Glass Stat Jewels                                    */}
+      {/* 4 Frosted Glass Stat Jewels (2x2 on Mobile, 4x1 on Desktop)    */}
       {/* ============================================================== */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '18px',
-        marginBottom: '36px'
-      }}>
+      <div className="dashboard-stats-grid">
         {/* Stat 1: Active Roadmaps */}
-        <div className="clean-panel" style={{ padding: '22px 24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 800 }}>
+        <div className="dashboard-stat-card">
+          <div className="dashboard-stat-header">
+            <span className="dashboard-stat-label">
               Active Pathways
             </span>
-            <div style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '12px', 
+            <div className="dashboard-stat-icon-box" style={{ 
               background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', 
               border: '1px solid #bfdbfe',
               color: '#1d4ed8', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(37, 99, 235, 0.15)'
             }}>
-              <GitFork size={19} />
+              <GitFork size={17} />
             </div>
           </div>
-          <div className="font-heading" style={{ fontSize: '2.3rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>
+          <div className="font-heading dashboard-stat-number">
             {totalPaths}
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '6px', fontWeight: 500 }}>
-            Custom career tracks generated
+          <div className="dashboard-stat-subtext">
+            Custom career tracks
           </div>
         </div>
 
         {/* Stat 2: Modules Completed */}
-        <div className="clean-panel" style={{ padding: '22px 24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 800 }}>
-              Curriculum Mastery
+        <div className="dashboard-stat-card">
+          <div className="dashboard-stat-header">
+            <span className="dashboard-stat-label">
+              Mastery
             </span>
-            <div style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '12px', 
+            <div className="dashboard-stat-icon-box" style={{ 
               background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)', 
               border: '1px solid #a7f3d0',
               color: '#059669', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(16, 185, 129, 0.15)'
             }}>
-              <CheckCircle2 size={19} />
+              <CheckCircle2 size={17} />
             </div>
           </div>
-          <div className="font-heading" style={{ fontSize: '2.3rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>
-            {totalCompletedModules} <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#94a3b8' }}>/ {totalModules}</span>
+          <div className="font-heading dashboard-stat-number">
+            {totalCompletedModules} <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#94a3b8' }}>/ {totalModules}</span>
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '6px', fontWeight: 500 }}>
-            <strong style={{ color: '#059669' }}>{overallPct}%</strong> overall milestones completed
+          <div className="dashboard-stat-subtext">
+            <strong style={{ color: '#059669' }}>{overallPct}%</strong> milestones done
           </div>
         </div>
 
         {/* Stat 3: Certificates */}
-        <div className="clean-panel" style={{ padding: '22px 24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 800 }}>
-              Verified Credentials
+        <div className="dashboard-stat-card">
+          <div className="dashboard-stat-header">
+            <span className="dashboard-stat-label">
+              Credentials
             </span>
-            <div style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '12px', 
+            <div className="dashboard-stat-icon-box" style={{ 
               background: 'linear-gradient(135deg, #fefce8 0%, #fef08a 100%)', 
               border: '1px solid #fde047',
               color: '#d97706', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(245, 158, 11, 0.18)'
             }}>
-              <Trophy size={19} />
+              <Trophy size={17} />
             </div>
           </div>
-          <div className="font-heading" style={{ fontSize: '2.3rem', fontWeight: 900, color: totalCertificates > 0 ? '#d97706' : '#0f172a', lineHeight: 1 }}>
+          <div className="font-heading dashboard-stat-number" style={{ color: totalCertificates > 0 ? '#d97706' : '#0f172a' }}>
             {totalCertificates}
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '6px', fontWeight: 500 }}>
-            {totalCertificates > 0 ? 'Official credentials earned' : 'Complete 100% of a path to earn'}
+          <div className="dashboard-stat-subtext">
+            {totalCertificates > 0 ? 'Official earned' : 'Complete 100% to earn'}
           </div>
         </div>
 
         {/* Stat 4: Total Study Hours */}
-        <div className="clean-panel" style={{ padding: '22px 24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 800 }}>
-              Learning Duration
+        <div className="dashboard-stat-card">
+          <div className="dashboard-stat-header">
+            <span className="dashboard-stat-label">
+              Duration
             </span>
-            <div style={{ 
-              width: '40px', 
-              height: '40px', 
-              borderRadius: '12px', 
+            <div className="dashboard-stat-icon-box" style={{ 
               background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)', 
               border: '1px solid #bae6fd',
               color: '#0284c7', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(2, 132, 199, 0.15)'
             }}>
-              <Clock size={19} />
+              <Clock size={17} />
             </div>
           </div>
-          <div className="font-heading" style={{ fontSize: '2.3rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>
+          <div className="font-heading dashboard-stat-number">
             ~{totalHours}h
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '6px', fontWeight: 500 }}>
-            Structured syllabus study content
+          <div className="dashboard-stat-subtext">
+            Structured study content
           </div>
         </div>
       </div>
@@ -336,89 +277,48 @@ export default function DashboardView({
       {/* ============================================================== */}
       {/* Floating Modern Tab Switcher                                   */}
       {/* ============================================================== */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '16px',
-        marginBottom: '26px',
-        borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
-        paddingBottom: '16px'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          gap: '6px',
-          background: 'rgba(255, 255, 255, 0.7)',
-          backdropFilter: 'blur(12px)',
-          padding: '4px',
-          borderRadius: '9999px',
-          border: '1px solid rgba(226, 232, 240, 0.85)'
-        }}>
+      <div className="dashboard-tabs-bar">
+        <div className="dashboard-tabs-scroll">
           <button
             onClick={() => setActiveTab('paths')}
+            className="dashboard-tab-btn"
             style={{
-              padding: '9px 20px',
-              borderRadius: '9999px',
-              border: 'none',
               background: activeTab === 'paths' ? 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)' : 'transparent',
               color: activeTab === 'paths' ? '#ffffff' : '#475569',
-              fontSize: '0.9rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'all 0.2s',
               boxShadow: activeTab === 'paths' ? '0 4px 14px rgba(37, 99, 235, 0.3)' : 'none'
             }}
           >
             <GitFork size={15} />
-            <span>My Learning Pathways ({roadmaps.length})</span>
+            <span className="dashboard-tab-text-full">My Learning Pathways ({roadmaps.length})</span>
+            <span className="dashboard-tab-text-short">Pathways ({roadmaps.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('certificates')}
+            className="dashboard-tab-btn"
             style={{
-              padding: '9px 20px',
-              borderRadius: '9999px',
-              border: 'none',
               background: activeTab === 'certificates' ? 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)' : 'transparent',
               color: activeTab === 'certificates' ? '#ffffff' : '#475569',
-              fontSize: '0.9rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'all 0.2s',
               boxShadow: activeTab === 'certificates' ? '0 4px 14px rgba(37, 99, 235, 0.3)' : 'none'
             }}
           >
             <Award size={15} />
-            <span>Verified Certificates ({certificates.length})</span>
+            <span className="dashboard-tab-text-full">Verified Certificates ({certificates.length})</span>
+            <span className="dashboard-tab-text-short">Certificates ({certificates.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('jobs')}
+            className="dashboard-tab-btn"
             style={{
-              padding: '9px 20px',
-              borderRadius: '9999px',
-              border: 'none',
               background: activeTab === 'jobs' ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : 'transparent',
               color: activeTab === 'jobs' ? '#ffffff' : '#475569',
-              fontSize: '0.9rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'all 0.2s',
               boxShadow: activeTab === 'jobs' ? '0 4px 14px rgba(2, 132, 199, 0.3)' : 'none'
             }}
           >
             <Briefcase size={15} />
-            <span>Live Job Radar</span>
+            <span className="dashboard-tab-text-full">Live Job Radar</span>
+            <span className="dashboard-tab-text-short">Job Radar</span>
             <span style={{
               width: '7px',
               height: '7px',
@@ -431,18 +331,11 @@ export default function DashboardView({
 
         <button
           onClick={loadDashboardData}
-          className="btn btn-secondary"
-          style={{ 
-            fontSize: '0.82rem', 
-            padding: '7px 14px', 
-            gap: '6px', 
-            background: 'rgba(255, 255, 255, 0.85)',
-            borderRadius: '9999px' 
-          }}
+          className="btn btn-secondary dashboard-refresh-btn"
           title="Refresh Data"
         >
           <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
-          <span>Refresh</span>
+          <span className="dashboard-tab-text-full">Refresh</span>
         </button>
       </div>
 
@@ -484,11 +377,7 @@ export default function DashboardView({
               </button>
             </div>
           ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-              gap: '24px'
-            }}>
+            <div className="dashboard-pathways-grid">
               {roadmaps.map((rm) => {
                 const completed = rm.completed_modules || rm.modules?.filter(m => m.is_completed).length || 0;
                 const total = rm.total_modules || rm.modules?.length || 1;
@@ -497,38 +386,32 @@ export default function DashboardView({
                 return (
                   <div 
                     key={rm.id}
-                    className="pathway-card"
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      cursor: 'pointer'
-                    }}
+                    className="dashboard-pathway-card"
                     onClick={() => onSelectRoadmap(rm.id)}
                   >
                     <div>
                       {/* Top Row: Target Role Badge + Delete */}
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                         <span style={{
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '6px',
-                          fontSize: '0.74rem',
+                          fontSize: '0.72rem',
                           fontWeight: 700,
-                          padding: '4px 12px',
+                          padding: '3px 10px',
                           borderRadius: '9999px',
                           background: pct === 100 ? '#ecfdf5' : '#eff6ff',
                           color: pct === 100 ? '#059669' : '#1d4ed8',
                           border: pct === 100 ? '1px solid #a7f3d0' : '1px solid #bfdbfe'
                         }}>
-                          <Target size={12} /> {rm.target_role}
+                          <Target size={11} /> {rm.target_role}
                         </span>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                           <span style={{
-                            fontSize: '0.72rem',
+                            fontSize: '0.7rem',
                             fontWeight: 800,
-                            padding: '3px 10px',
+                            padding: '3px 9px',
                             borderRadius: '9999px',
                             background: pct === 100 ? '#ecfdf5' : '#eff6ff',
                             color: pct === 100 ? '#059669' : '#1d4ed8',
@@ -558,27 +441,18 @@ export default function DashboardView({
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '8px', lineHeight: 1.3 }}>
+                      <h3 className="font-heading dashboard-pathway-title">
                         {rm.title}
                       </h3>
 
                       {/* Summary / Narrative */}
-                      <p style={{ 
-                        fontSize: '0.86rem', 
-                        color: '#64748b', 
-                        lineHeight: 1.55, 
-                        marginBottom: '18px',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden'
-                      }}>
+                      <p className="dashboard-pathway-desc">
                         {rm.overview_narrative || rm.skill_gap_summary || 'Comprehensive structured career roadmap.'}
                       </p>
 
                       {/* Progress Bar */}
-                      <div style={{ marginBottom: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700, marginBottom: '6px' }}>
+                      <div style={{ marginBottom: '14px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', fontWeight: 700, marginBottom: '6px' }}>
                           <span style={{ color: '#475569' }}>Progress</span>
                           <span style={{ color: pct === 100 ? '#059669' : '#2563eb' }}>
                             {pct}% ({completed}/{total} Milestones)
@@ -586,7 +460,7 @@ export default function DashboardView({
                         </div>
                         <div style={{
                           width: '100%',
-                          height: '8px',
+                          height: '7px',
                           background: 'rgba(226, 232, 240, 0.8)',
                           borderRadius: '9999px',
                           overflow: 'hidden'
@@ -604,7 +478,7 @@ export default function DashboardView({
                       </div>
 
                       {/* Meta Tags */}
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', fontSize: '0.78rem', color: '#64748b', marginBottom: '18px' }}>
+                      <div className="dashboard-pathway-meta">
                         <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                           <Clock size={13} color="#2563eb" /> ~{rm.total_estimated_hours || 120}h total
                         </span>
@@ -615,27 +489,21 @@ export default function DashboardView({
                     </div>
 
                     {/* Card Action Button */}
-                    <div style={{ paddingTop: '14px', borderTop: '1px solid rgba(226, 232, 240, 0.7)' }}>
+                    <div style={{ paddingTop: '12px', borderTop: '1px solid rgba(226, 232, 240, 0.7)' }}>
                       <button
                         type="button"
                         onClick={() => onSelectRoadmap(rm.id)}
-                        className="btn"
+                        className="btn dashboard-pathway-btn"
                         style={{ 
-                          width: '100%', 
-                          fontSize: '0.88rem', 
-                          padding: '11px', 
-                          gap: '8px',
-                          borderRadius: '11px',
                           background: pct === 100 
                             ? 'linear-gradient(135deg, #059669 0%, #10b981 100%)' 
                             : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #0284c7 100%)',
-                          color: '#ffffff',
                           boxShadow: pct === 100 ? '0 4px 14px rgba(16, 185, 129, 0.3)' : '0 4px 14px rgba(37, 99, 235, 0.32)'
                         }}
                       >
-                        <BookOpen size={16} />
+                        <BookOpen size={15} />
                         <span>Continue Learning Pathway</span>
-                        <ArrowRight size={14} />
+                        <ArrowRight size={13} />
                       </button>
                     </div>
 
@@ -690,20 +558,12 @@ export default function DashboardView({
               </button>
             </div>
           ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-              gap: '24px'
-            }}>
+            <div className="dashboard-pathways-grid">
               {certificates.map((cert) => (
                 <div
                   key={cert.id || cert.verification_code}
-                  className="clean-panel"
+                  className="dashboard-pathway-card"
                   style={{
-                    padding: '28px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
                     border: '1px solid rgba(167, 243, 208, 0.9)'
                   }}
                 >
