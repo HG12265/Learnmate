@@ -98,7 +98,9 @@ export default function ModuleCard({
           fontWeight: 800, 
           lineHeight: 1.3,
           marginBottom: '8px',
-          color: '#0f172a'
+          color: '#0f172a',
+          wordBreak: 'break-word',
+          overflowWrap: 'break-word'
         }}>
           {module.title}
         </h3>
@@ -108,7 +110,9 @@ export default function ModuleCard({
           fontSize: '0.88rem', 
           color: 'var(--text-secondary)', 
           marginBottom: '14px', 
-          lineHeight: 1.55 
+          lineHeight: 1.55,
+          wordBreak: 'break-word',
+          overflowWrap: 'break-word'
         }}>
           {module.description}
         </p>
@@ -199,6 +203,8 @@ export default function ModuleCard({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '10px',
         paddingTop: '16px',
         borderTop: '1px solid rgba(226, 232, 240, 0.8)',
         marginTop: '8px'

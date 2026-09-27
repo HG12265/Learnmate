@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  Target, 
-  Clock, 
-  TrendingUp, 
-  CheckCircle2, 
-  RefreshCw, 
+import {
+  Target,
+  Clock,
+  TrendingUp,
+  CheckCircle2,
+  RefreshCw,
   GraduationCap,
   Award,
   Lock,
@@ -25,10 +25,10 @@ import {
 import ModuleCard from './ModuleCard';
 import LiveJobBoard from './LiveJobBoard';
 
-export default function RoadmapView({ 
-  roadmap, 
-  onOpenNotes, 
-  onToggleComplete, 
+export default function RoadmapView({
+  roadmap,
+  onOpenNotes,
+  onToggleComplete,
   onNewPath,
   onOpenAssessment,
   certificate,
@@ -87,24 +87,24 @@ export default function RoadmapView({
   let globalModuleCounter = 0;
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '24px 20px 80px' }}>
-      
+    <div className="roadmap-container">
+
       {/* Top Back & Exploration Bar */}
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between', 
-        marginBottom: '20px',
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '16px',
         flexWrap: 'wrap',
-        gap: '12px'
+        gap: '10px'
       }}>
-        <button 
+        <button
           onClick={onNewPath}
           style={{
             background: 'none',
             border: 'none',
             color: 'var(--primary)',
-            fontSize: '0.9rem',
+            fontSize: '0.88rem',
             fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
@@ -117,19 +117,19 @@ export default function RoadmapView({
           <span>Explore Roadmaps & Pathways</span>
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <button
             onClick={() => setShowJobsDrawer(true)}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '7px',
-              padding: '7px 16px',
+              gap: '6px',
+              padding: '6px 14px',
               borderRadius: 'var(--radius-full)',
               background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%)',
               border: '1px solid rgba(6, 182, 212, 0.45)',
               color: 'var(--accent-cyan)',
-              fontSize: '0.82rem',
+              fontSize: '0.78rem',
               fontWeight: 700,
               cursor: 'pointer',
               boxShadow: '0 0 16px rgba(6, 182, 212, 0.2)',
@@ -137,38 +137,28 @@ export default function RoadmapView({
             }}
           >
             <span style={{
-              width: '8px',
-              height: '8px',
+              width: '7px',
+              height: '7px',
               borderRadius: '50%',
               background: '#10b981',
               boxShadow: '0 0 8px #10b981'
             }} />
-            <Briefcase size={15} />
+            <Briefcase size={14} />
             <span>Live Job Openings</span>
           </button>
 
-          <button 
+          <button
             onClick={onNewPath}
             className="btn btn-secondary"
-            style={{ fontSize: '0.8rem', padding: '6px 14px' }}
+            style={{ fontSize: '0.78rem', padding: '6px 12px' }}
           >
-            <RefreshCw size={13} /> Modify Profile / Create New
+            <RefreshCw size={13} /> <span>Modify / New</span>
           </button>
         </div>
       </div>
 
       {/* Main Journey Header Card (Executive Mastery Cockpit) */}
-      <div className="clean-panel" style={{
-        padding: '36px 36px',
-        marginBottom: '28px',
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'rgba(255, 255, 255, 0.88)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.95)',
-        boxShadow: '0 20px 50px -10px rgba(15, 23, 42, 0.08), inset 0 1px 2px rgba(255, 255, 255, 1)',
-        borderRadius: '24px'
-      }}>
+      <div className="clean-panel roadmap-hero-card">
         {/* Ambient Top Light Flare */}
         <div style={{
           position: 'absolute',
@@ -183,38 +173,29 @@ export default function RoadmapView({
 
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
           {/* Subtitle Pill / Jewel Badge */}
-          <div style={{ marginBottom: '14px' }}>
+          <div style={{ marginBottom: '12px' }}>
             <span style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
               background: 'rgba(37, 99, 235, 0.08)',
               color: '#1d4ed8',
-              padding: '6px 18px',
+              padding: '4px 14px',
               borderRadius: '9999px',
-              fontSize: '0.8rem',
+              fontSize: '0.76rem',
               fontWeight: 800,
               letterSpacing: '0.04em',
               textTransform: 'uppercase',
               border: '1px solid rgba(191, 219, 254, 0.9)',
               boxShadow: '0 2px 8px rgba(37, 99, 235, 0.08)'
             }}>
-              <Sparkles size={13} color="#2563eb" />
+              <Sparkles size={12} color="#2563eb" />
               {roadmap.subtitle || `Career Acceleration Track • ${roadmap.target_role}`}
             </span>
           </div>
 
           {/* Title with Royal Sapphire Gradient */}
-          <h1 className="font-heading" style={{ 
-            fontSize: 'clamp(2rem, 4.2vw, 2.7rem)', 
-            fontWeight: 900, 
-            lineHeight: 1.2, 
-            marginBottom: '16px', 
-            color: '#0f172a',
-            maxWidth: '900px',
-            margin: '0 auto 16px',
-            letterSpacing: '-0.025em'
-          }}>
+          <h1 className="font-heading roadmap-hero-title">
             <span style={{
               background: 'linear-gradient(135deg, #0f172a 20%, #1e40af 60%, #0284c7 100%)',
               WebkitBackgroundClip: 'text',
@@ -226,26 +207,20 @@ export default function RoadmapView({
           </h1>
 
           {/* Narrative Description */}
-          <p style={{ 
-            fontSize: '0.98rem', 
-            color: '#475569', 
-            lineHeight: 1.65, 
-            maxWidth: '860px', 
-            margin: '0 auto 22px' 
-          }}>
-            {roadmap.overview_narrative || roadmap.skill_gap_summary || 
+          <p className="roadmap-hero-desc">
+            {roadmap.overview_narrative || roadmap.skill_gap_summary ||
               `This comprehensive pathway is an end-to-end, industry-aligned career roadmap designed to transform learners from fundamental principles to production-grade architecture, hands-on physical/cloud integration, security standards, and professional readiness.`
             }
           </p>
 
           {/* Skill Gap & Baseline Chips */}
-          <div style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            gap: '10px', 
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
             flexWrap: 'wrap',
-            paddingTop: '18px',
+            paddingTop: '14px',
             borderTop: '1px solid rgba(226, 232, 240, 0.8)'
           }}>
             <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 700 }}>Profile Baseline:</span>
@@ -303,10 +278,8 @@ export default function RoadmapView({
             )}
           </div>
         </div>
-      </div>
-
-      {/* "Your Progress" Mastery Meter Card */}
-      <div className="clean-panel" style={{
+      </div>      {/* "Your Progress" Mastery Meter Card */}
+      <div className="clean-panel roadmap-progress-card" style={{
         padding: '24px 30px',
         marginBottom: '32px',
         background: 'rgba(255, 255, 255, 0.88)',
@@ -314,11 +287,11 @@ export default function RoadmapView({
         border: '1px solid rgba(255, 255, 255, 0.95)',
         boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.07)'
       }}>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          flexWrap: 'wrap', 
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
           gap: '12px',
           marginBottom: '14px'
         }}>
@@ -336,13 +309,13 @@ export default function RoadmapView({
             }}>
               {progressPct === 100 ? <Award size={17} /> : <TrendingUp size={17} />}
             </div>
-            <h2 className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+            <h2 className="font-heading roadmap-progress-title" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
               Curriculum Mastery Progress
             </h2>
           </div>
-          <span style={{ 
-            fontSize: '0.92rem', 
-            fontWeight: 800, 
+          <span className="roadmap-progress-badge" style={{
+            fontSize: '0.92rem',
+            fontWeight: 800,
             padding: '4px 14px',
             borderRadius: '9999px',
             background: progressPct === 100 ? 'rgba(236, 253, 245, 0.9)' : 'rgba(239, 246, 255, 0.9)',
@@ -365,8 +338,8 @@ export default function RoadmapView({
           <div style={{
             height: '100%',
             width: `${progressPct}%`,
-            background: progressPct === 100 
-              ? 'linear-gradient(90deg, #059669 0%, #10b981 100%)' 
+            background: progressPct === 100
+              ? 'linear-gradient(90deg, #059669 0%, #10b981 100%)'
               : 'linear-gradient(90deg, #1d4ed8 0%, #2563eb 40%, #0284c7 70%, #10b981 100%)',
             borderRadius: '9999px',
             boxShadow: progressPct === 100 ? '0 0 12px rgba(16, 185, 129, 0.4)' : '0 0 12px rgba(37, 99, 235, 0.4)',
@@ -375,11 +348,11 @@ export default function RoadmapView({
         </div>
 
         {/* Meta Stats Row */}
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          flexWrap: 'wrap', 
+        <div className="roadmap-progress-stats" style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
           gap: '16px',
           paddingTop: '14px',
           borderTop: '1px solid rgba(226, 232, 240, 0.8)',
@@ -406,16 +379,16 @@ export default function RoadmapView({
       </div>
 
       {/* Filter and View Mode Switcher */}
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between', 
-        flexWrap: 'wrap', 
-        gap: '16px', 
-        marginBottom: '26px' 
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px',
+        marginBottom: '26px'
       }}>
         {/* Phase Filter Buttons */}
-        <div style={{
+        <div className="roadmap-phase-pills" style={{
           display: 'flex',
           background: 'rgba(255, 255, 255, 0.72)',
           backdropFilter: 'blur(16px)',
@@ -425,18 +398,21 @@ export default function RoadmapView({
           gap: '4px',
           overflowX: 'auto',
           maxWidth: '100%',
-          boxShadow: '0 2px 10px rgba(15, 23, 42, 0.04)'
+          boxShadow: '0 2px 10px rgba(15, 23, 42, 0.04)',
+          scrollbarWidth: 'none',
+          WebkitOverflowScrolling: 'touch'
         }}>
           {phases.map((phase) => (
             <button
               key={phase}
               onClick={() => setActivePhaseFilter(phase)}
               style={{
+                flexShrink: 0,
                 padding: '7px 16px',
                 borderRadius: '9999px',
                 border: 'none',
-                background: activePhaseFilter === phase 
-                  ? 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)' 
+                background: activePhaseFilter === phase
+                  ? 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)'
                   : 'transparent',
                 color: activePhaseFilter === phase ? '#ffffff' : '#475569',
                 fontSize: '0.8rem',
@@ -540,8 +516,8 @@ export default function RoadmapView({
                   const isLeft = currentIdx % 2 === 0;
 
                   return (
-                    <div 
-                      key={module.id} 
+                    <div
+                      key={module.id}
                       className={`pathway-row ${isLeft ? 'pathway-row-left' : 'pathway-row-right'}`}
                     >
                       {/* Left or Right Module Card */}
@@ -554,7 +530,7 @@ export default function RoadmapView({
                         />
 
                         {/* Connector line connecting card edge to center node */}
-                        <div 
+                        <div
                           className={`pathway-connector ${isLeft ? 'pathway-connector-left' : 'pathway-connector-right'} ${module.is_completed ? 'completed' : ''}`}
                         />
                       </div>
@@ -580,16 +556,15 @@ export default function RoadmapView({
             {/* Centered Final Milestone Banner */}
             <div className="pathway-phase-section" style={{ marginBottom: '24px' }}>
               <div className="pathway-phase-header-card" style={{
-                background: progressPct === 100 
-                  ? 'rgba(236, 253, 245, 0.95)' 
+                background: progressPct === 100
+                  ? 'rgba(236, 253, 245, 0.95)'
                   : 'rgba(255, 255, 255, 0.92)',
-                border: `1px solid ${
-                  progressPct === 100 
-                    ? 'rgba(167, 243, 208, 0.9)' 
+                border: `1px solid ${progressPct === 100
+                    ? 'rgba(167, 243, 208, 0.9)'
                     : 'rgba(191, 219, 254, 0.9)'
-                }`,
-                boxShadow: progressPct === 100 
-                  ? '0 10px 30px rgba(16, 185, 129, 0.15)' 
+                  }`,
+                boxShadow: progressPct === 100
+                  ? '0 10px 30px rgba(16, 185, 129, 0.15)'
                   : '0 10px 30px rgba(37, 99, 235, 0.08)'
               }}>
                 <span className="pathway-phase-title" style={{
@@ -608,18 +583,17 @@ export default function RoadmapView({
             </div>
 
             {/* Central Trophy Node & Card */}
-            <div className="pathway-row pathway-row-left" style={{ justifyContent: 'center' }}>
+            <div className="pathway-capstone-row" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
               <div style={{ width: '100%', maxWidth: '840px', margin: '0 auto', position: 'relative', zIndex: 3 }}>
-                <div className="clean-panel" style={{
-                  background: progressPct === 100 
-                    ? (certificate ? 'linear-gradient(135deg, rgba(236, 253, 245, 0.94) 0%, rgba(209, 250, 229, 0.88) 100%)' : 'linear-gradient(135deg, rgba(239, 246, 255, 0.94) 0%, rgba(219, 234, 254, 0.88) 100%)') 
+                <div className="clean-panel roadmap-capstone-card" style={{
+                  background: progressPct === 100
+                    ? (certificate ? 'linear-gradient(135deg, rgba(236, 253, 245, 0.94) 0%, rgba(209, 250, 229, 0.88) 100%)' : 'linear-gradient(135deg, rgba(239, 246, 255, 0.94) 0%, rgba(219, 234, 254, 0.88) 100%)')
                     : 'rgba(255, 255, 255, 0.88)',
                   backdropFilter: 'blur(20px)',
-                  border: `1px solid ${
-                    progressPct === 100 
-                      ? (certificate ? 'rgba(167, 243, 208, 0.95)' : 'rgba(191, 219, 254, 0.95)') 
+                  border: `1px solid ${progressPct === 100
+                      ? (certificate ? 'rgba(167, 243, 208, 0.95)' : 'rgba(191, 219, 254, 0.95)')
                       : 'rgba(226, 232, 240, 0.9)'
-                  }`,
+                    }`,
                   borderRadius: '24px',
                   padding: '32px 34px',
                   display: 'flex',
@@ -627,17 +601,17 @@ export default function RoadmapView({
                   justifyContent: 'space-between',
                   flexWrap: 'wrap',
                   gap: '24px',
-                  boxShadow: progressPct === 100 
-                    ? '0 20px 50px -10px rgba(16, 185, 129, 0.2)' 
+                  boxShadow: progressPct === 100
+                    ? '0 20px 50px -10px rgba(16, 185, 129, 0.2)'
                     : '0 16px 40px -10px rgba(15, 23, 42, 0.08)'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+                  <div className="pathway-capstone-inner" style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
                     <div style={{
                       width: '58px',
                       height: '58px',
                       borderRadius: '16px',
-                      background: progressPct === 100 
-                        ? (certificate ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)') 
+                      background: progressPct === 100
+                        ? (certificate ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)')
                         : 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
                       color: progressPct === 100 ? '#ffffff' : '#64748b',
                       display: 'flex',
@@ -651,13 +625,12 @@ export default function RoadmapView({
 
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                        <span className={`badge ${
-                          progressPct === 100 
-                            ? (certificate ? 'badge-emerald' : 'badge-primary') 
+                        <span className={`badge ${progressPct === 100
+                            ? (certificate ? 'badge-emerald' : 'badge-primary')
                             : 'badge-secondary'
-                        }`} style={{ fontSize: '0.74rem' }}>
-                          {progressPct === 100 
-                            ? (certificate ? 'Verified Credential Earned' : 'Examination Ready') 
+                          }`} style={{ fontSize: '0.74rem' }}>
+                          {progressPct === 100
+                            ? (certificate ? 'Verified Credential Earned' : 'Examination Ready')
                             : 'Examination Locked'}
                         </span>
                         <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
@@ -666,32 +639,32 @@ export default function RoadmapView({
                       </div>
 
                       <h3 className="font-heading" style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px' }}>
-                        {certificate 
-                          ? `Certified in ${roadmap.target_role} (${certificate.score}/50 - ${certificate.percentage}%)` 
+                        {certificate
+                          ? `Certified in ${roadmap.target_role} (${certificate.score}/50 - ${certificate.percentage}%)`
                           : `${roadmap.target_role} Official Certification Exam`}
                       </h3>
 
                       <p style={{ fontSize: '0.88rem', color: '#475569', margin: 0, maxWidth: '580px', lineHeight: 1.55 }}>
                         {progressPct === 100
-                          ? (certificate 
-                              ? `Congratulations! You passed the official evaluation. Your verifiable tamper-proof credentials are issued and can be viewed or downloaded anytime.` 
-                              : `All ${totalCount} pathway milestones completed! The official 50-MCQ evaluation is now unlocked. Score at least 30 marks to earn your official completion certificate.`)
+                          ? (certificate
+                            ? `Congratulations! You passed the official evaluation. Your verifiable tamper-proof credentials are issued and can be viewed or downloaded anytime.`
+                            : `All ${totalCount} pathway milestones completed! The official 50-MCQ evaluation is now unlocked. Score at least 30 marks to earn your official completion certificate.`)
                           : `Complete all ${totalCount} pathway milestones to unlock the final 50-question comprehensive evaluation. Progress: ${completedCount} of ${totalCount} (${progressPct}%).`}
                       </p>
                     </div>
                   </div>
 
-                  <div>
+                  <div className="roadmap-capstone-actions">
                     {progressPct === 100 ? (
                       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                         {certificate && (
                           <button
                             onClick={onOpenCertificate}
                             className="btn"
-                            style={{ 
-                              fontSize: '0.92rem', 
-                              padding: '12px 22px', 
-                              gap: '8px', 
+                            style={{
+                              fontSize: '0.92rem',
+                              padding: '12px 22px',
+                              gap: '8px',
                               background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
                               color: '#ffffff',
                               borderRadius: '12px',
@@ -740,15 +713,14 @@ export default function RoadmapView({
           <div className="clean-panel" style={{
             padding: '26px 32px',
             marginBottom: '32px',
-            background: progressPct === 100 
-              ? (certificate ? 'linear-gradient(135deg, rgba(236, 253, 245, 0.94) 0%, rgba(209, 250, 229, 0.88) 100%)' : 'linear-gradient(135deg, rgba(239, 246, 255, 0.94) 0%, rgba(219, 234, 254, 0.88) 100%)') 
+            background: progressPct === 100
+              ? (certificate ? 'linear-gradient(135deg, rgba(236, 253, 245, 0.94) 0%, rgba(209, 250, 229, 0.88) 100%)' : 'linear-gradient(135deg, rgba(239, 246, 255, 0.94) 0%, rgba(219, 234, 254, 0.88) 100%)')
               : 'rgba(255, 255, 255, 0.88)',
             backdropFilter: 'blur(20px)',
-            border: `1px solid ${
-              progressPct === 100 
-                ? (certificate ? 'rgba(167, 243, 208, 0.95)' : 'rgba(191, 219, 254, 0.95)') 
+            border: `1px solid ${progressPct === 100
+                ? (certificate ? 'rgba(167, 243, 208, 0.95)' : 'rgba(191, 219, 254, 0.95)')
                 : 'rgba(226, 232, 240, 0.9)'
-            }`,
+              }`,
             borderRadius: '20px',
             display: 'flex',
             alignItems: 'center',
@@ -762,8 +734,8 @@ export default function RoadmapView({
                 width: '52px',
                 height: '52px',
                 borderRadius: '14px',
-                background: progressPct === 100 
-                  ? (certificate ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)') 
+                background: progressPct === 100
+                  ? (certificate ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)')
                   : 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
                 color: progressPct === 100 ? '#ffffff' : '#64748b',
                 display: 'flex',
@@ -777,8 +749,8 @@ export default function RoadmapView({
 
               <div>
                 <h3 className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px' }}>
-                  {certificate 
-                    ? `Certified in ${roadmap.target_role} (${certificate.score}/50)` 
+                  {certificate
+                    ? `Certified in ${roadmap.target_role} (${certificate.score}/50)`
                     : `${roadmap.target_role} Official Certification Exam`}
                 </h3>
                 <p style={{ fontSize: '0.88rem', color: '#64748b', margin: 0 }}>
@@ -813,9 +785,9 @@ export default function RoadmapView({
           </div>
 
           {/* Module Cards Grid */}
-          <div style={{
+          <div className="roadmap-modules-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
             gap: '24px'
           }}>
             {filteredModules.map((mod) => (
@@ -855,10 +827,10 @@ export default function RoadmapView({
             display: 'flex',
             flexDirection: 'column'
           }}>
-            <LiveJobBoard 
-              roadmap={roadmap} 
-              onClose={() => setShowJobsDrawer(false)} 
-              isDrawer={true} 
+            <LiveJobBoard
+              roadmap={roadmap}
+              onClose={() => setShowJobsDrawer(false)}
+              isDrawer={true}
             />
           </div>
         </div>
