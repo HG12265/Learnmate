@@ -710,7 +710,7 @@ export default function RoadmapView({
       {viewMode === 'grid' && (
         <div>
           {/* Final Exam Bar */}
-          <div className="clean-panel" style={{
+          <div className="clean-panel roadmap-capstone-card" style={{
             padding: '26px 32px',
             marginBottom: '32px',
             background: progressPct === 100
@@ -729,7 +729,7 @@ export default function RoadmapView({
             gap: '20px',
             boxShadow: progressPct === 100 ? '0 16px 36px -6px rgba(16, 185, 129, 0.16)' : '0 10px 30px -5px rgba(15, 23, 42, 0.06)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div className="pathway-capstone-inner" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <div style={{
                 width: '52px',
                 height: '52px',
@@ -748,29 +748,67 @@ export default function RoadmapView({
               </div>
 
               <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                  <span className={`badge ${
+                    progressPct === 100 
+                      ? (certificate ? 'badge-emerald' : 'badge-primary') 
+                      : 'badge-secondary'
+                  }`} style={{ fontSize: '0.74rem' }}>
+                    {progressPct === 100 
+                      ? (certificate ? 'Verified Credential Earned' : 'Examination Ready') 
+                      : 'Examination Locked'}
+                  </span>
+                  <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                    50 Multiple-Choice Questions &bull; Pass Mark: 30 / 50 (60%)
+                  </span>
+                </div>
+
                 <h3 className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px' }}>
                   {certificate
-                    ? `Certified in ${roadmap.target_role} (${certificate.score}/50)`
+                    ? `Certified in ${roadmap.target_role} (${certificate.score}/50 - ${certificate.percentage}%)`
                     : `${roadmap.target_role} Official Certification Exam`}
                 </h3>
-                <p style={{ fontSize: '0.88rem', color: '#64748b', margin: 0 }}>
+                <p style={{ fontSize: '0.88rem', color: '#475569', margin: 0, maxWidth: '580px', lineHeight: 1.55 }}>
                   {progressPct === 100
-                    ? `The final 50-MCQ AI examination is unlocked.`
-                    : `Complete all ${totalCount} milestones to unlock.`}
+                    ? (certificate 
+                        ? `Congratulations! You passed the official evaluation. Your verifiable tamper-proof credentials are issued and can be viewed or downloaded anytime.` 
+                        : `All ${totalCount} pathway milestones completed! The official 50-MCQ evaluation is now unlocked. Score at least 30 marks to earn your official completion certificate.`)
+                    : `Complete all ${totalCount} pathway milestones to unlock the final 50-question comprehensive evaluation. Progress: ${completedCount} of ${totalCount} (${progressPct}%).`}
                 </p>
               </div>
             </div>
 
-            <div>
+            <div className="roadmap-capstone-actions">
               {progressPct === 100 ? (
-                <button
-                  onClick={onOpenAssessment}
-                  className="btn btn-primary"
-                  style={{ fontSize: '0.92rem', padding: '11px 22px', gap: '8px', borderRadius: '12px' }}
-                >
-                  <FileCheck2 size={18} />
-                  <span>Take Certification Exam</span>
-                </button>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  {certificate && (
+                    <button
+                      onClick={onOpenCertificate}
+                      className="btn"
+                      style={{ 
+                        fontSize: '0.92rem', 
+                        padding: '11px 22px', 
+                        gap: '8px', 
+                        background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+                        color: '#ffffff',
+                        borderRadius: '12px',
+                        boxShadow: '0 6px 18px rgba(16, 185, 129, 0.35)'
+                      }}
+                    >
+                      <Award size={18} />
+                      <span>View Certificate</span>
+                    </button>
+                  )}
+
+                  <button
+                    onClick={onOpenAssessment}
+                    className={certificate ? "btn btn-secondary" : "btn btn-primary"}
+                    style={{ fontSize: '0.92rem', padding: '11px 22px', gap: '8px', borderRadius: '12px' }}
+                  >
+                    <FileCheck2 size={18} />
+                    <span>{certificate ? 'Retake Exam' : 'Take Certification Exam'}</span>
+                  </button>
+                </div>
               ) : (
                 <button
                   disabled
@@ -778,7 +816,7 @@ export default function RoadmapView({
                   style={{ fontSize: '0.88rem', padding: '10px 18px', opacity: 0.65, cursor: 'not-allowed', gap: '6px', borderRadius: '11px' }}
                 >
                   <Lock size={15} />
-                  <span>Locked</span>
+                  <span>Locked ({completedCount}/{totalCount} Completed)</span>
                 </button>
               )}
             </div>
