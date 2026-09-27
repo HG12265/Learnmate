@@ -40,3 +40,5 @@ yarn-debug.log*
 # Antigravity & Agent Scratchpad
 .gemini/
 .agents/
+
+demo-images/
