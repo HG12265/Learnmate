@@ -1209,9 +1209,74 @@ code, pre {
 }
 
 /* ==========================================================================
-   Mobile & Tablet Responsive Timeline (FLAWLESS LEFT-SPINE LAYOUT)
+   Module Notes Page (Study Labs & AI Research Mentor)
    ========================================================================== */
-@media (max-width: 860px) {
+.notes-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+.notes-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06);
+  border-radius: 20px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.notes-mobile-switcher {
+  display: none;
+}
+
+.notes-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 32px;
+  align-items: start;
+}
+
+.notes-content-col {
+  min-width: 0;
+}
+
+.notes-chatbot-col {
+  position: sticky;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.notes-section-card {
+  padding: 36px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 36px -8px rgba(15, 23, 42, 0.06);
+  border-radius: 24px;
+}
+
+/* ==========================================================================
+   Mobile & Tablet Responsive Timeline & Notes Layout
+   ========================================================================== */
+@media (max-width: 960px) {
   .roadmap-container {
     padding: 12px 10px 60px !important;
   }
@@ -1409,6 +1474,136 @@ code, pre {
   .pathway-connector-left,
   .pathway-connector-right {
     display: none !important;
+  }
+
+  /* Notes Page Mobile Responsiveness */
+  .notes-container {
+    padding: 12px 10px 60px !important;
+  }
+
+  .notes-nav-bar {
+    padding: 12px 14px !important;
+    margin-bottom: 16px !important;
+    border-radius: 16px !important;
+    gap: 10px !important;
+  }
+
+  .notes-nav-tags {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+  }
+
+  .notes-nav-tags span {
+    font-size: 0.72rem !important;
+    padding: 4px 10px !important;
+  }
+
+  .notes-nav-actions {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .notes-nav-actions button {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    padding: 8px 10px !important;
+    font-size: 0.76rem !important;
+  }
+
+  .notes-mobile-switcher {
+    display: flex !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    border-radius: 9999px !important;
+    padding: 4px !important;
+    gap: 6px !important;
+    margin-bottom: 18px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  }
+
+  .notes-mobile-tab {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 14px !important;
+    border-radius: 9999px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #64748b !important;
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .notes-mobile-tab.active {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+  }
+
+  .notes-main-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .notes-content-col {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .notes-content-col.mobile-hidden {
+    display: none !important;
+  }
+
+  .notes-chatbot-col {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 210px) !important;
+    min-height: 520px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06) !important;
+  }
+
+  .notes-chatbot-col.mobile-hidden {
+    display: none !important;
+  }
+
+  .notes-section-card {
+    padding: 18px 14px !important;
+    border-radius: 18px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .notes-page-title {
+    font-size: 1.4rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 12px !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .notes-brief-card {
+    padding: 14px 14px !important;
+    font-size: 0.88rem !important;
+    border-radius: 14px !important;
+  }
+
+  .notes-code-pre {
+    padding: 14px 12px !important;
+    font-size: 0.8rem !important;
+    line-height: 1.5 !important;
   }
 }
 

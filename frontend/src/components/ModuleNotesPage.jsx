@@ -31,6 +31,7 @@ export default function ModuleNotesPage({
   const [error, setError] = useState('');
   const [notes, setNotes] = useState(null);
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [mobileTab, setMobileTab] = useState('notes'); // 'notes' | 'mentor'
 
   // Chatbot State
   const [mentorQuestion, setMentorQuestion] = useState('');
@@ -117,23 +118,10 @@ export default function ModuleNotesPage({
   };
 
   return (
-    <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '24px 24px 80px' }}>
+    <div className="notes-container">
 
       {/* Top Navigation Bar (Frosted Glass Executive Bar) */}
-      <div className="clean-panel" style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: '32px',
-        padding: '16px 24px',
-        background: 'rgba(255, 255, 255, 0.88)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.95)',
-        boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
-        borderRadius: '20px',
-        flexWrap: 'wrap',
-        gap: '14px'
-      }}>
+      <div className="clean-panel notes-nav-bar">
         <button
           onClick={onBack}
           className="btn btn-secondary"
@@ -150,7 +138,7 @@ export default function ModuleNotesPage({
           <span>Back to Roadmap</span>
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+        <div className="notes-nav-tags" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <span style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -195,7 +183,7 @@ export default function ModuleNotesPage({
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="notes-nav-actions" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
             onClick={handleDownloadPDF}
             disabled={loading || !notes}
@@ -263,16 +251,41 @@ export default function ModuleNotesPage({
         </div>
       </div>
 
+      {/* Mobile Tab Switcher (Study Notes vs AI Research Mentor) */}
+      <div className="notes-mobile-switcher">
+        <button
+          onClick={() => setMobileTab('notes')}
+          className={`notes-mobile-tab ${mobileTab === 'notes' ? 'active' : ''}`}
+        >
+          <BookOpen size={16} />
+          <span>Study Notes</span>
+        </button>
+        <button
+          onClick={() => setMobileTab('mentor')}
+          className={`notes-mobile-tab ${mobileTab === 'mentor' ? 'active' : ''}`}
+        >
+          <Bot size={16} />
+          <span>AI Research Mentor</span>
+          {mentorChatHistory.length > 0 && (
+            <span style={{
+              background: mobileTab === 'mentor' ? 'rgba(255, 255, 255, 0.28)' : '#2563eb',
+              color: '#ffffff',
+              fontSize: '0.68rem',
+              padding: '1px 6px',
+              borderRadius: '9999px',
+              fontWeight: 800
+            }}>
+              {mentorChatHistory.length}
+            </span>
+          )}
+        </button>
+      </div>
+
       {/* Main Grid: Content (Left) + Side Chatbot (Right) */}
-      <div className="notes-main-grid" style={{
-        display: 'grid',
-        gridTemplateColumns: 'minmax(0, 1fr) 420px',
-        gap: '32px',
-        alignItems: 'start'
-      }}>
+      <div className="notes-main-grid">
 
         {/* LEFT COLUMN: Clean In-depth Content */}
-        <div className="notes-content-col">
+        <div className={`notes-content-col ${mobileTab === 'mentor' ? 'mobile-hidden' : ''}`}>
           {/* Print-Only Professional Document Header */}
           <div className="print-only" style={{
             display: 'none',
@@ -336,13 +349,15 @@ export default function ModuleNotesPage({
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               {/* Module Header Title */}
               <div>
-                <h1 className="font-heading" style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 2.6rem)',
+                <h1 className="font-heading notes-page-title" style={{
+                  fontSize: 'clamp(1.9rem, 3.8vw, 2.5rem)',
                   fontWeight: 900,
                   color: '#0f172a',
-                  lineHeight: 1.2,
+                  lineHeight: 1.25,
                   marginBottom: '16px',
-                  letterSpacing: '-0.025em'
+                  letterSpacing: '-0.025em',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
                 }}>
                   <span style={{
                     background: 'linear-gradient(135deg, #0f172a 20%, #1e40af 60%, #0284c7 100%)',
@@ -355,7 +370,7 @@ export default function ModuleNotesPage({
 
                 {/* Summary Card */}
                 {notes.overview && (
-                  <div style={{
+                  <div className="notes-brief-card" style={{
                     background: 'rgba(239, 246, 255, 0.85)',
                     border: '1px solid rgba(191, 219, 254, 0.9)',
                     borderLeft: '5px solid #2563eb',
@@ -364,7 +379,9 @@ export default function ModuleNotesPage({
                     fontSize: '0.98rem',
                     color: '#1e3a8a',
                     lineHeight: 1.65,
-                    boxShadow: '0 4px 16px rgba(37, 99, 235, 0.05)'
+                    boxShadow: '0 4px 16px rgba(37, 99, 235, 0.05)',
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word'
                   }}>
                     <strong style={{ color: '#1e40af', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px', fontSize: '0.84rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                       <Sparkles size={14} color="#2563eb" /> Module Executive Brief:
@@ -375,13 +392,11 @@ export default function ModuleNotesPage({
               </div>
 
               {/* Main Learning Content / Theory */}
-              <div className="clean-panel" style={{
-                padding: '36px',
+              <div className="clean-panel notes-section-card" style={{
                 background: 'rgba(255, 255, 255, 0.88)',
                 backdropFilter: 'blur(20px)',
                 border: '1px solid rgba(255, 255, 255, 0.95)',
-                boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.06)',
-                borderRadius: '24px'
+                boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.06)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '22px', paddingBottom: '14px', borderBottom: '1px solid rgba(226, 232, 240, 0.8)' }}>
                   <div style={{
@@ -413,13 +428,11 @@ export default function ModuleNotesPage({
 
               {/* Practical Examples (macOS Terminal Style) */}
               {notes.code_snippets?.length > 0 && (
-                <div className="clean-panel" style={{
-                  padding: '36px',
+                <div className="clean-panel notes-section-card" style={{
                   background: 'rgba(255, 255, 255, 0.88)',
                   backdropFilter: 'blur(20px)',
                   border: '1px solid rgba(255, 255, 255, 0.95)',
-                  boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.06)',
-                  borderRadius: '24px'
+                  boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.06)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '22px', paddingBottom: '14px', borderBottom: '1px solid rgba(226, 232, 240, 0.8)' }}>
                     <div style={{
@@ -508,7 +521,7 @@ export default function ModuleNotesPage({
                           </button>
                         </div>
 
-                        <pre style={{
+                        <pre className="notes-code-pre" style={{
                           padding: '20px 22px',
                           margin: 0,
                           overflowX: 'auto',
@@ -544,13 +557,11 @@ export default function ModuleNotesPage({
 
               {/* Practical Hands-on Challenge */}
               {notes.practical_lab_task && (
-                <div className="clean-panel" style={{
-                  padding: '36px',
+                <div className="clean-panel notes-section-card" style={{
                   background: 'rgba(255, 255, 255, 0.88)',
                   backdropFilter: 'blur(20px)',
                   border: '1px solid rgba(255, 255, 255, 0.95)',
-                  boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.06)',
-                  borderRadius: '24px'
+                  boxShadow: '0 12px 36px -8px rgba(15, 23, 42, 0.06)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', paddingBottom: '14px', borderBottom: '1px solid rgba(226, 232, 240, 0.8)' }}>
                     <div style={{
@@ -633,24 +644,53 @@ export default function ModuleNotesPage({
                 </div>
               )}
 
+              {/* Mobile Quick Jump Card to AI Research Mentor */}
+              <div className="clean-panel notes-section-card notes-mobile-switcher" style={{
+                background: 'linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(219, 234, 254, 0.9) 100%)',
+                border: '1px solid rgba(191, 219, 254, 0.95)',
+                textAlign: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <div style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                }}>
+                  <Bot size={22} />
+                </div>
+                <h3 className="font-heading" style={{ fontSize: '1.08rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                  Have Questions or Doubts?
+                </h3>
+                <p style={{ fontSize: '0.84rem', color: '#475569', margin: 0, lineHeight: 1.5 }}>
+                  Ask our AI Research Mentor for simplified analogies, code examples, or interview practice on this module.
+                </p>
+                <button
+                  onClick={() => {
+                    setMobileTab('mentor');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', padding: '11px', borderRadius: '12px', gap: '8px', fontSize: '0.88rem' }}
+                >
+                  <MessageSquare size={16} />
+                  <span>Open AI Research Mentor</span>
+                </button>
+              </div>
+
             </div>
           ) : null}
         </div>
 
         {/* RIGHT COLUMN: Dedicated Sticky Side Chatbot for Doubts */}
-        <div className="notes-chatbot-col no-print" style={{
-          position: 'sticky',
-          top: '90px',
-          display: 'flex',
-          flexDirection: 'column',
-          height: 'calc(100vh - 120px)',
-          background: 'rgba(255, 255, 255, 0.88)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.95)',
-          borderRadius: '24px',
-          boxShadow: '0 16px 40px -8px rgba(15, 23, 42, 0.08)',
-          overflow: 'hidden'
-        }}>
+        <div className={`notes-chatbot-col no-print ${mobileTab === 'notes' ? 'mobile-hidden' : ''}`}>
           {/* Chatbot Header */}
           <div style={{
             padding: '18px 22px',
@@ -700,25 +740,42 @@ export default function ModuleNotesPage({
               </div>
             </div>
 
-            {mentorChatHistory.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <button
-                onClick={() => setMentorChatHistory([])}
+                onClick={() => setMobileTab('notes')}
+                className="btn btn-secondary notes-mobile-switcher"
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#94a3b8',
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  padding: '4px 8px',
-                  borderRadius: '6px'
+                  padding: '5px 10px',
+                  borderRadius: '8px',
+                  fontSize: '0.74rem',
+                  fontWeight: 700,
+                  gap: '4px'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.color = '#ef4444'}
-                onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
               >
-                Clear
+                <ArrowLeft size={13} />
+                <span>Notes</span>
               </button>
-            )}
+
+              {mentorChatHistory.length > 0 && (
+                <button
+                  onClick={() => setMentorChatHistory([])}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#94a3b8',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    padding: '4px 8px',
+                    borderRadius: '6px'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#ef4444'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Messages Container */}

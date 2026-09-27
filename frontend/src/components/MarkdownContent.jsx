@@ -63,12 +63,13 @@ export default function MarkdownContent({ content }) {
             padding: '16px 20px',
             margin: '18px 0',
             overflowX: 'auto',
+            maxWidth: '100%',
             color: '#93c5fd',
             fontFamily: 'Fira Code, monospace',
             fontSize: '0.88rem',
             lineHeight: 1.55
           }}>
-            <pre style={{ margin: 0 }}><code>{currentCodeBlock.join('\n')}</code></pre>
+            <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}><code>{currentCodeBlock.join('\n')}</code></pre>
           </div>
         );
         currentCodeBlock = null;
@@ -164,5 +165,5 @@ export default function MarkdownContent({ content }) {
 
   flushList();
 
-  return <div style={{ color: '#1e293b' }}>{elements}</div>;
+  return <div style={{ color: '#1e293b', wordBreak: 'break-word', overflowWrap: 'break-word' }}>{elements}</div>;
 }
