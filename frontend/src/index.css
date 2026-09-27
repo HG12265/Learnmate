@@ -185,6 +185,12 @@ code, pre {
     gap: 5px !important;
     border-radius: 9px !important;
   }
+  .navbar-user-name {
+    display: none !important;
+  }
+  .navbar-signout-text {
+    display: none !important;
+  }
 }
 
 /* ======================================================== */
@@ -1337,6 +1343,199 @@ code, pre {
 }
 
 /* ==========================================================================
+   Questionnaire / Career Pathway Form
+   ========================================================================== */
+.questionnaire-container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.questionnaire-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(191, 219, 254, 0.9);
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: 0.03em;
+}
+
+.questionnaire-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.questionnaire-subtitle {
+  font-size: 1.05rem;
+  color: #475569;
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+.questionnaire-panel {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.07);
+  border-radius: 24px;
+}
+
+.questionnaire-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.questionnaire-icon-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.questionnaire-section-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.questionnaire-section-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 3px 0 0 0;
+  line-height: 1.45;
+}
+
+.questionnaire-education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.questionnaire-education-item {
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.16s ease;
+  color: #1e293b;
+  font-weight: 600;
+  user-select: none;
+}
+
+.questionnaire-education-item.selected {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(219, 234, 254, 0.7) 100%);
+  color: #1d4ed8;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+}
+
+.questionnaire-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.questionnaire-chip {
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(241, 245, 249, 0.85);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  color: #334155;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.questionnaire-chip:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.questionnaire-chip.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.questionnaire-language-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.questionnaire-language-item {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+
+.questionnaire-language-item.selected {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(219, 234, 254, 0.7) 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+}
+
+.questionnaire-language-native {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.questionnaire-language-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.questionnaire-submit-btn {
+  font-size: 1.05rem;
+  padding: 15px 36px;
+  border-radius: 14px;
+  min-width: 280px;
+  font-weight: 800;
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
    Mobile & Tablet Responsive Timeline & Notes Layout
    ========================================================================== */
 @media (max-width: 960px) {
@@ -1799,6 +1998,85 @@ code, pre {
     width: 100% !important;
     justify-content: center !important;
     padding: 12px 18px !important;
+  }
+
+  /* Questionnaire Page Mobile Responsiveness */
+  .questionnaire-container {
+    padding: 16px 12px 60px !important;
+  }
+
+  .questionnaire-title {
+    font-size: 1.45rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .questionnaire-subtitle {
+    font-size: 0.86rem !important;
+    line-height: 1.45 !important;
+    padding: 0 4px !important;
+  }
+
+  .questionnaire-panel {
+    padding: 20px 16px !important;
+    gap: 22px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05) !important;
+  }
+
+  .questionnaire-section-title {
+    font-size: 1.02rem !important;
+  }
+
+  /* 2-column grid for education on mobile */
+  .questionnaire-education-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .questionnaire-education-item {
+    padding: 11px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .questionnaire-education-item span {
+    font-size: 0.84rem !important;
+  }
+
+  /* 2-column grid for languages on mobile */
+  .questionnaire-language-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .questionnaire-language-item {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .questionnaire-language-native {
+    font-size: 0.88rem !important;
+  }
+
+  .questionnaire-language-sub {
+    font-size: 0.72rem !important;
+  }
+
+  .questionnaire-quick-chips {
+    gap: 6px !important;
+  }
+
+  .questionnaire-chip {
+    padding: 4px 10px !important;
+    font-size: 0.74rem !important;
+  }
+
+  .questionnaire-submit-btn {
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 14px 20px !important;
+    font-size: 1rem !important;
+    border-radius: 12px !important;
   }
 }
 
