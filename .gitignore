@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+*/node_modules/
+venv/
+*/venv/
+.venv/
+*/.venv/
+env/
+*/env/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+*.env
+.env.*
+!.env.example
+
+# Build Outputs
+dist/
+build/
+*/dist/
+*/build/
+
+# Python Cache
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# IDE & OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Antigravity & Agent Scratchpad
+.gemini/
+.agents/
