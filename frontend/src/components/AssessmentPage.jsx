@@ -36,6 +36,7 @@ export default function AssessmentPage({
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [showReview, setShowReview] = useState(false);
+  const [mobileTab, setMobileTab] = useState('question'); // 'question' | 'palette'
 
   useEffect(() => {
     if (roadmap?.id) {
@@ -113,23 +114,10 @@ export default function AssessmentPage({
   const progressPct = questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0;
 
   return (
-    <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '24px 24px 80px' }}>
+    <div className="assessment-container">
       
       {/* Top Page Navigation Bar (Official Board of Examination Header) */}
-      <div className="clean-panel" style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: '32px',
-        padding: '16px 24px',
-        background: 'rgba(255, 255, 255, 0.88)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.95)',
-        boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
-        borderRadius: '20px',
-        flexWrap: 'wrap',
-        gap: '14px'
-      }}>
+      <div className="clean-panel assessment-nav-bar">
         <button
           onClick={() => {
             if (Object.keys(answers).length > 0 && !result) {
@@ -152,7 +140,7 @@ export default function AssessmentPage({
           <span>Back to Roadmap</span>
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+        <div className="assessment-nav-tags" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <span style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -326,7 +314,7 @@ export default function AssessmentPage({
             </p>
 
             {/* Score Stats Badge Group */}
-            <div style={{
+            <div className="assessment-stats-group" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '32px',
@@ -369,7 +357,7 @@ export default function AssessmentPage({
             </div>
 
             {/* Result Action Buttons */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <div className="assessment-results-actions" style={{ display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
               {result.passed && (
                 <button
                   onClick={onOpenCertificate}
@@ -555,119 +543,154 @@ export default function AssessmentPage({
 
         </div>
       ) : currentQuestion ? (
-        /* Standalone Full-Page Examination Hall */
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) 340px',
-          gap: '32px',
-          alignItems: 'start'
-        }}>
-          
-          {/* Left Column: Active Question & Interactive Choices */}
-          <div>
-            {/* Header info */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
-              <span style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '5px 14px',
-                borderRadius: '9999px',
-                background: 'rgba(37, 99, 235, 0.08)',
-                color: '#1d4ed8',
-                border: '1px solid rgba(191, 219, 254, 0.9)',
-                fontSize: '0.8rem',
-                fontWeight: 800,
-                letterSpacing: '0.03em'
-              }}>
-                <Sparkles size={13} color="#2563eb" /> {currentQuestion.module_title || `Curriculum Section ${Math.ceil((currentIdx + 1) / 10)}`}
-              </span>
+        <>
+          {/* Mobile Tab Switcher (Active Question vs Question Palette) */}
+          <div className="assessment-mobile-switcher">
+            <button
+              onClick={() => setMobileTab('question')}
+              className={`assessment-mobile-tab ${mobileTab === 'question' ? 'active' : ''}`}
+            >
+              <Sparkles size={15} />
+              <span>Question {currentIdx + 1}</span>
+            </button>
+            <button
+              onClick={() => setMobileTab('palette')}
+              className={`assessment-mobile-tab ${mobileTab === 'palette' ? 'active' : ''}`}
+            >
+              <HelpCircle size={15} />
+              <span>Palette ({answeredCount}/{questions.length})</span>
+            </button>
+          </div>
 
-              <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a' }}>
-                Question {currentIdx + 1} of {questions.length}
-              </span>
-            </div>
+          {/* Standalone Full-Page Examination Hall */}
+          <div className="assessment-main-grid">
+            
+            {/* Left Column: Active Question & Interactive Choices */}
+            <div className={`assessment-question-col ${mobileTab === 'palette' ? 'mobile-hidden' : ''}`}>
+              {/* Header info */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '8px' }}>
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '5px 14px',
+                  borderRadius: '9999px',
+                  background: 'rgba(37, 99, 235, 0.08)',
+                  color: '#1d4ed8',
+                  border: '1px solid rgba(191, 219, 254, 0.9)',
+                  fontSize: '0.8rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.03em'
+                }}>
+                  <Sparkles size={13} color="#2563eb" /> {currentQuestion.module_title || `Curriculum Section ${Math.ceil((currentIdx + 1) / 10)}`}
+                </span>
 
-            {/* Main Question Card (Frosted Glass Hall) */}
-            <div className="clean-panel" style={{
-              padding: '36px',
-              background: 'rgba(255, 255, 255, 0.88)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.95)',
-              borderRadius: '24px',
-              boxShadow: '0 16px 40px -8px rgba(15, 23, 42, 0.07)',
-              marginBottom: '28px'
-            }}>
-              <h2 className="font-heading" style={{
-                fontSize: '1.35rem',
-                fontWeight: 800,
-                color: '#0f172a',
-                lineHeight: 1.55,
-                marginBottom: '28px',
-                letterSpacing: '-0.01em'
-              }}>
-                {currentQuestion.question}
-              </h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a' }}>
+                    Question {currentIdx + 1} of {questions.length}
+                  </span>
 
-              {/* 4 Interactive Option Cards */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {currentQuestion.options?.map((opt, oIdx) => {
-                  const isSelected = answers[currentQuestion.id] === oIdx;
-
-                  return (
-                    <div
-                      key={oIdx}
-                      onClick={() => handleSelectOption(currentQuestion.id, oIdx)}
-                      style={{
-                        padding: '18px 22px',
-                        borderRadius: '16px',
-                        border: isSelected ? '2px solid #2563eb' : '1px solid rgba(226, 232, 240, 0.95)',
-                        background: isSelected ? 'linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(219, 234, 254, 0.9) 100%)' : 'rgba(255, 255, 255, 0.9)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '16px',
-                        transition: 'all 0.18s ease',
-                        boxShadow: isSelected ? '0 8px 24px -4px rgba(37, 99, 235, 0.25)' : '0 2px 6px rgba(15, 23, 42, 0.02)',
-                        transform: isSelected ? 'translateY(-1px)' : 'none'
-                      }}
-                    >
-                      <span style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '50%',
-                        border: isSelected ? '2px solid #2563eb' : '1px solid #cbd5e1',
-                        background: isSelected ? 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '0.92rem',
-                        fontWeight: 900,
-                        flexShrink: 0,
-                        boxShadow: isSelected ? '0 3px 10px rgba(37, 99, 235, 0.3)' : 'none'
-                      }}>
-                        {String.fromCharCode(65 + oIdx)}
-                      </span>
-
-                      <span style={{
-                        fontSize: '1rem',
-                        color: isSelected ? '#1d4ed8' : '#1e293b',
-                        fontWeight: isSelected ? 700 : 500,
-                        lineHeight: 1.5,
-                        flex: 1
-                      }}>
-                        {opt}
-                      </span>
-
-                      {isSelected && (
-                        <CheckCircle2 size={22} color="#2563eb" />
-                      )}
-                    </div>
-                  );
-                })}
+                  <button
+                    onClick={() => setMobileTab('palette')}
+                    className="assessment-mobile-switcher"
+                    style={{
+                      background: 'rgba(37, 99, 235, 0.08)',
+                      border: '1px solid rgba(191, 219, 254, 0.9)',
+                      color: '#1d4ed8',
+                      borderRadius: '9999px',
+                      padding: '3px 10px',
+                      fontSize: '0.74rem',
+                      fontWeight: 700,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Palette
+                  </button>
+                </div>
               </div>
-            </div>
+
+              {/* Main Question Card (Frosted Glass Hall) */}
+              <div className="clean-panel assessment-card" style={{
+                background: 'rgba(255, 255, 255, 0.88)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(255, 255, 255, 0.95)',
+                boxShadow: '0 16px 40px -8px rgba(15, 23, 42, 0.07)'
+              }}>
+                <h2 className="font-heading assessment-question-title" style={{
+                  fontSize: '1.35rem',
+                  fontWeight: 800,
+                  color: '#0f172a',
+                  lineHeight: 1.55,
+                  marginBottom: '28px',
+                  letterSpacing: '-0.01em',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
+                }}>
+                  {currentQuestion.question}
+                </h2>
+
+                {/* 4 Interactive Option Cards */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {currentQuestion.options?.map((opt, oIdx) => {
+                    const isSelected = answers[currentQuestion.id] === oIdx;
+
+                    return (
+                      <div
+                        key={oIdx}
+                        onClick={() => handleSelectOption(currentQuestion.id, oIdx)}
+                        className="assessment-option-item"
+                        style={{
+                          padding: '18px 22px',
+                          borderRadius: '16px',
+                          border: isSelected ? '2px solid #2563eb' : '1px solid rgba(226, 232, 240, 0.95)',
+                          background: isSelected ? 'linear-gradient(135deg, rgba(239, 246, 255, 0.95) 0%, rgba(219, 234, 254, 0.9) 100%)' : 'rgba(255, 255, 255, 0.9)',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '16px',
+                          transition: 'all 0.18s ease',
+                          boxShadow: isSelected ? '0 8px 24px -4px rgba(37, 99, 235, 0.25)' : '0 2px 6px rgba(15, 23, 42, 0.02)',
+                          transform: isSelected ? 'translateY(-1px)' : 'none'
+                        }}
+                      >
+                        <span style={{
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: '50%',
+                          border: isSelected ? '2px solid #2563eb' : '1px solid #cbd5e1',
+                          background: isSelected ? 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)' : '#ffffff',
+                          color: isSelected ? '#ffffff' : '#475569',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.92rem',
+                          fontWeight: 900,
+                          flexShrink: 0,
+                          boxShadow: isSelected ? '0 3px 10px rgba(37, 99, 235, 0.3)' : 'none'
+                        }}>
+                          {String.fromCharCode(65 + oIdx)}
+                        </span>
+
+                        <span className="assessment-option-text" style={{
+                          fontSize: '1rem',
+                          color: isSelected ? '#1d4ed8' : '#1e293b',
+                          fontWeight: isSelected ? 700 : 500,
+                          lineHeight: 1.5,
+                          flex: 1,
+                          wordBreak: 'break-word',
+                          overflowWrap: 'break-word'
+                        }}>
+                          {opt}
+                        </span>
+
+                        {isSelected && (
+                          <CheckCircle2 size={22} color="#2563eb" style={{ flexShrink: 0 }} />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
 
             {/* Bottom Navigation Buttons */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -724,20 +747,27 @@ export default function AssessmentPage({
           </div>
 
           {/* Right Column: Dedicated Sticky Exam Palette Sidebar */}
-          <div className="clean-panel" style={{
-            position: 'sticky',
-            top: '90px',
-            background: 'rgba(255, 255, 255, 0.88)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.95)',
-            borderRadius: '24px',
-            padding: '24px',
-            boxShadow: '0 16px 40px -8px rgba(15, 23, 42, 0.08)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <h3 className="font-heading" style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-                Question Palette
-              </h3>
+          <div className={`clean-panel assessment-palette-col ${mobileTab === 'question' ? 'mobile-hidden' : ''}`}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <button
+                  onClick={() => setMobileTab('question')}
+                  className="btn btn-secondary assessment-mobile-switcher"
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: '8px',
+                    fontSize: '0.74rem',
+                    fontWeight: 700,
+                    gap: '4px'
+                  }}
+                >
+                  <ArrowLeft size={13} />
+                  <span>Question</span>
+                </button>
+                <h3 className="font-heading" style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                  Question Palette
+                </h3>
+              </div>
               <span style={{ 
                 fontSize: '0.8rem', 
                 fontWeight: 800, 
@@ -786,7 +816,10 @@ export default function AssessmentPage({
                 return (
                   <button
                     key={q.id}
-                    onClick={() => setCurrentIdx(idx)}
+                    onClick={() => {
+                      setCurrentIdx(idx);
+                      setMobileTab('question');
+                    }}
                     style={{
                       aspectRatio: '1',
                       borderRadius: '9px',
@@ -830,8 +863,8 @@ export default function AssessmentPage({
             </div>
 
           </div>
-
         </div>
+      </>
       ) : (
         <div className="clean-panel" style={{
           padding: '60px 24px',
