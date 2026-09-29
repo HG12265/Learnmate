@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Printer, Award, ShieldCheck, CheckCircle2, Edit2, Check } from 'lucide-react';
+import { X, Printer, Award, ShieldCheck, CheckCircle2, Edit2, Check, Download } from 'lucide-react';
 import { api } from '../services/api';
 
 export default function CertificateModal({ isOpen, onClose, certificate }) {
@@ -8,6 +8,7 @@ export default function CertificateModal({ isOpen, onClose, certificate }) {
   const [userName, setUserName] = useState(certificate.user_name || '');
   const [isEditingName, setIsEditingName] = useState(false);
   const [savingName, setSavingName] = useState(false);
+  const [downloadingCert, setDownloadingCert] = useState(false);
 
   useEffect(() => {
     if (certificate && certificate.user_name) {
@@ -17,6 +18,32 @@ export default function CertificateModal({ isOpen, onClose, certificate }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownloadCertificate = async () => {
+    if (downloadingCert) return;
+    setDownloadingCert(true);
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      const element = document.querySelector('.certificate-paper');
+      if (!element) {
+        window.print();
+        return;
+      }
+      const opt = {
+        margin: [5, 5, 5, 5],
+        filename: `LEARNMATE_Certificate_${(userName || certificate.user_name || 'Learner').replace(/[^a-zA-Z0-9_-]/g, '_')}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+      };
+      await html2pdf().set(opt).from(element).save();
+    } catch (err) {
+      console.error('Certificate PDF export error, falling back to print:', err);
+      window.print();
+    } finally {
+      setDownloadingCert(false);
+    }
   };
 
   const handleSaveName = async () => {
@@ -87,12 +114,23 @@ export default function CertificateModal({ isOpen, onClose, certificate }) {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button
-              onClick={handlePrint}
+              onClick={handleDownloadCertificate}
+              disabled={downloadingCert}
               className="btn btn-primary"
               style={{ fontSize: '0.85rem', padding: '8px 16px', gap: '6px' }}
             >
+              <Download size={15} className={downloadingCert ? 'animate-bounce' : ''} />
+              <span>{downloadingCert ? 'Generating PDF...' : 'Download PDF'}</span>
+            </button>
+
+            <button
+              onClick={handlePrint}
+              className="btn btn-secondary"
+              title="Print Certificate"
+              style={{ fontSize: '0.85rem', padding: '8px 12px', gap: '6px', background: '#f8fafc' }}
+            >
               <Printer size={15} />
-              <span>Print / Save as PDF</span>
+              <span>Print</span>
             </button>
 
             <button
