@@ -191,6 +191,47 @@ code, pre {
   .navbar-signout-text {
     display: none !important;
   }
+  .install-btn-text-full {
+    display: none !important;
+  }
+  .install-btn-text-short {
+    display: inline !important;
+  }
+  .btn-install-app {
+    padding: 7px 11px !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+.btn-install-app {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 15px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.35);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-install-app:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 5px 18px rgba(16, 185, 129, 0.45);
+}
+
+.install-btn-text-full {
+  display: inline;
+}
+
+.install-btn-text-short {
+  display: none;
 }
 
 /* ======================================================== */

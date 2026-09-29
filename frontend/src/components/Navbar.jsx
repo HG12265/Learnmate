@@ -1,5 +1,5 @@
-import React from 'react';
-import { LogIn, LogOut, User, LayoutDashboard, PlusCircle, Sparkles, BookOpen, Award, Briefcase } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { LogIn, LogOut, User, LayoutDashboard, PlusCircle, Sparkles, BookOpen, Award, Briefcase, Smartphone } from 'lucide-react';
 
 export default function Navbar({ 
   user, 
@@ -12,6 +12,48 @@ export default function Navbar({
   onNewPathClick,
   onStartJourney
 }) {
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+  const [showIOSPrompt, setShowIOSPrompt] = useState(false);
+
+  const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = typeof window !== 'undefined' && (
+    window.matchMedia('(display-mode: standalone)').matches || 
+    window.navigator.standalone === true
+  );
+
+  useEffect(() => {
+    const handleBeforeInstall = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+
+    window.addEventListener('appinstalled', () => {
+      setIsInstallable(false);
+      setDeferredPrompt(null);
+    });
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsInstallable(false);
+      }
+      setDeferredPrompt(null);
+    } else if (isIOS) {
+      setShowIOSPrompt(true);
+    }
+  };
+
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
@@ -183,7 +225,19 @@ export default function Navbar({
         )}
 
         {/* Right side: User Profile + Logout OR Sign In */}
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {!isStandalone && (isInstallable || isIOS) && (
+            <button 
+              onClick={handleInstallClick}
+              className="btn-install-app"
+              title="Install Learnmate App"
+            >
+              <Smartphone size={15} />
+              <span className="install-btn-text-full">Install App</span>
+              <span className="install-btn-text-short">Install</span>
+            </button>
+          )}
+
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div 
@@ -268,6 +322,56 @@ export default function Navbar({
         </div>
 
       </div>
+
+      {showIOSPrompt && (
+        <div 
+          onClick={() => setShowIOSPrompt(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(15, 23, 42, 0.65)',
+            backdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            zIndex: 99999
+          }}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#ffffff',
+              borderRadius: '20px',
+              maxWidth: '380px',
+              width: '100%',
+              padding: '24px',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+              textAlign: 'center'
+            }}
+          >
+            <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>📲</div>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1e293b', marginBottom: '8px' }}>
+              Install Learnmate App
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: '#64748b', lineHeight: 1.5, marginBottom: '16px' }}>
+              Add Learnmate to your iOS Home Screen for instant offline access and a full-screen experience:
+            </p>
+            <div style={{ textAlign: 'left', background: '#f8fafc', padding: '14px', borderRadius: '12px', fontSize: '0.86rem', color: '#334155', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px', border: '1px solid #e2e8f0' }}>
+              <div>1️⃣ Tap the <strong>Share</strong> icon in Safari's bottom toolbar.</div>
+              <div>2️⃣ Scroll down and choose <strong>Add to Home Screen</strong>.</div>
+              <div>3️⃣ Tap <strong>Add</strong> in the top-right corner.</div>
+            </div>
+            <button
+              onClick={() => setShowIOSPrompt(false)}
+              className="navbar-auth-btn"
+              style={{ width: '100%', justifyContent: 'center', padding: '11px', borderRadius: '12px' }}
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
